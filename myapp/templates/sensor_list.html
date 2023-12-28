@@ -1,0 +1,24 @@
+<!-- sensor_list.html -->
+<h1>Sensor List</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Serial Number</th>
+            <th>Sensor Type ID</th>
+            <th>AQS System Serial Number</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sensor in sensors %}
+            <tr>
+                <td>{{ sensor.id }}</td>
+                <td>{{ sensor.serialno }}</td>
+                <td>{{ sensor.sensor_type_id }}</td>
+                <td>{{ sensor.aqs_system_serialno }}</td>
+                <td>{{ sensor.created_at }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
