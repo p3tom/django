@@ -1,0 +1,35 @@
+<!-- myapp/templates/aqssystem.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+</head>
+<body>
+    {% block content %}  
+        <h2>AQS MODEL</h2>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>serialno</th>
+                    <th>model_id</th>
+                    <th>created_at</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aqssystem in aqssystems %}
+                    <tr>
+                        <td>{{ aqssystem.serialno }}</td>
+                        <td>{{ aqssystem.model_id }}</td>
+                        <td>{{ aqssystem.created_at }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="5">No aqssystems available.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

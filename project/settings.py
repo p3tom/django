@@ -9,12 +9,15 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import os
 
 from pathlib import Path
 
+GDAL_LIBRARY_PATH = r'C:\Users\PreethiKamaraj\project\db\Lib\site-packages\osgeo\gdal304.dll'
+GEOS_LIBRARY_PATH = r'C:\Users\PreethiKamaraj\project\db\Lib\site-packages\osgeo\geos_c.dll'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -23,9 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5@tq(hvk9ch^2w*^7erclsq0@z5r%&jmq+-sr((=3*24@1e54n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["127.0.0.1"]
+
 
 
 # Application definition
@@ -38,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+    'django.contrib.gis',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +61,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'myapp', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,7 +79,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+import dj_database_url
 
+# Use the database URL for configuration if available
+#db_from_env = dj_database_url.config()
+# DATABASES = {'default': db_from_env} if db_from_env else {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -121,7 +130,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+
 STATIC_URL = '/static/'
+STATIC_ROOT = 'C:\\Users\\PreethiKamaraj\\project\\static'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'myapp', 'static'),
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

@@ -1,0 +1,36 @@
+<!-- myapp/templates/sensor_list.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}  
+        <h2>Sensor List</h2>
+        <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Serial Number</th>
+                <th>Sensor Type ID</th>
+                <th>AQS System Serial Number</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sensor in sensors %}
+                <tr>
+                    <td>{{ sensor.id }}</td>
+                    <td>{{ sensor.serialno }}</td>
+                    <td>{{ sensor.sensor_type_id }}</td>
+                    <td>{{ sensor.aqs_system_serialno }}</td>
+                    <td>{{ sensor.created_at }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No sensors available.</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

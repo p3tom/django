@@ -1,0 +1,30 @@
+<!-- myapp/templates/customer.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}
+        <h2>AQS CUSTOMERS</h2>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Created AT</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}<!--sensor is an item and sensors is an object-->
+                    <tr>
+                        <td>{{ customer.id }}</td>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.created_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

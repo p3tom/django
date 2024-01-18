@@ -1,0 +1,36 @@
+<!-- myapp/templates/sensor_list.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}  
+        <h2>plant</h2>
+        <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th> NAME</th>
+                <th> site_id</th>
+                
+                <th> created_at</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plant in plants %}
+                <tr>
+                    <td>{{ plant.id }}</td>
+                    <td>{{ plant.name }}</td>
+                    <td>{{ plant.site_id }}</td>
+                  
+                    <td>{{ plant.created_at }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No plant available.</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% endblock %}        
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!-- myapp/templates/event.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}
+        <h2>EVENT</h2>
+        <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.id }}</td>
+                    <td>{{ event.description }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No events available.</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

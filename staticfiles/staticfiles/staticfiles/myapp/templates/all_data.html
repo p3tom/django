@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>AQS DATABASE</h1>
+  
+<ul>
+  {% for sensor in sensors %}
+    <li>{{ sensor.id }} {{ sensor.serialno }} {{ sensor.sensor_type_id }} {{ sensor.aqs_system_serialno }} {{ sensor.created_at }}</li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

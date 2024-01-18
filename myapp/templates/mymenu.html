@@ -1,1 +1,46 @@
-<div>HOME | Sensor | Measurement | FORUM | </div>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+<div class="topnav">
+  <a href="../home/">HOME</a> |
+  <a href="../aqsmodel/">AQS MODEL</a> |
+  <a href="../aqssystem/">AQS SYSTEM</a> |
+  <a href="../customer/">Customer</a> |
+  <a href="../event/">Event</a> |
+  <a href="../measurement_pt/">measurement_pt</a> |
+  <a href="../measurement_pt_event/">measurement_pt_event</a> |
+  <a href="../measurement_pt_history/">measurement_pt_history</a> |
+  <a href="../measurement_pt_sensor/">measurement_pt_sensor</a> |
+  <a href="../measurement_pt_type/">measurement_pt_type</a> |
+  <a href="../measurement/">measurement</a> |
+  <a href="../oem_manufacturer/">oem_manufacturer</a> |
+  <a href="../plant/">plant</a> |
+  <a href="../sensor/">sensor</a> |
+  <a href="../sensor_history/">sensor_history</a> |
+  <a href="../sensor_type/">sensor_type</a> |
+  <a href="../sensor_verification/">sensor_verification</a> |
+  <a href="../site/">Site</a> |
+  <a href="../site_contact/">Site_Contact</a> |
+  <a href="../tag_name/">Tag_Name</a> |
+  <a href="../aq_unit/">Aq_Unit</a> |
+  <a href="../aq_unit_type/">Aq_Unit_Type</a> |
+  <a href="../mqtt_topic/">mqtt_topic</a> |
+  <a href="../logger_config/">logger_config</a> |
+  <a href="../version_info/">version_info</a> |
+  <a href="../tag_type/">Tag_Type</a> |
+  <a href="../logger_instance/">Logger_Instance</a> |
+  
+
+</div>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!-- myapp/templates/logger_config.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+</head>
+<body>
+    {% block content %}  
+        <h2>LOGGER CONFIG</h2>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>mqtt_topic_id</th>
+                    <th>tag_name_id</th>
+                    <th>sensor_id</th>
+                    <th>log_interval_sec</th>
+                    <th>log_on_change</th>
+                    <th>logger_id</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for logger_config in logger_configs %}
+                    <tr>
+                        <td>{{ logger_config.mqtt_topic_id }}</td>
+                        <td>{{ logger_config.tag_name_id }}</td>
+                        <td>{{ logger_config.sensor_id }}</td>
+                        <td>{{ logger_config.log_interval_sec }}</td>
+                        <td>{{ logger_config.log_on_change }}</td>
+                        <td>{{ logger_config.logger_id }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="6">No logger_configs available.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

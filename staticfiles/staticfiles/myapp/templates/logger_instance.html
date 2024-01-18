@@ -1,0 +1,30 @@
+<!-- myapp/templates/logger_instance.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}  
+        <h2>logger_instance</h2>
+        <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for logger_instance in logger_instances %}
+                <tr>
+                    <td>{{ logger_instance.0 }}</td>
+                    <td>{{ logger_instance.1 }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No logger_instances available.</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!-- aq_unit.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+</head>
+<body>
+    {% block content %}
+        <h2>aq_unit</h2>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>name</th>
+                    <th>plant_id</th>
+                    <th>aq_unit_type_id</th>
+                    <th>Description</th>
+                    <th>geo_x</th>
+                    <th>geo_y</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aq_unit in aq_units %}
+                    <tr>
+                        <td>{{ aq_unit.id }}</td>
+                        <td>{{ aq_unit.name }}</td>
+                        <td>{{ aq_unit.plant_id }}</td>
+                        <td>{{ aq_unit.aq_unit_type_id }}</td>
+                        <td>{{ aq_unit.description }}</td>
+                        <td>{{ aq_unit.geo_xy.x }}</td>
+                        <td>{{ aq_unit.geo_xy.y }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="7">No aq_units available.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!-- myapp/templates/sensor_list.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}  
+        <h2>Measurement Point</h2>
+        <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th> ts</th>
+                <th>text</th>
+                <th>measurement_pt_id</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for measurement_pt_event in measurement_pt_events %}
+                <tr>
+                    <td>{{ measurement_pt_event.id }}</td>
+                    <td>{{ measurement_pt_event.ts }}</td>
+                    <td>{{ measurement_pt_event.text }}</td>
+                    <td>{{ measurement_pt_event.measurement_pt_id }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No measurement_pt_event available.</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

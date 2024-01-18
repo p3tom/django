@@ -1,0 +1,42 @@
+<!-- myapp/templates/tag_name_list.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}  
+        <h2>tag_name List</h2>
+        <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th> NAME </th>
+                <th> description</th>
+                <th>unit</th>
+                <th> unit_long</th>
+                <th>unit_description</th>
+                <th> tag_type_id</th>
+                <th> created_at</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tag_name in tag_names %}
+                <tr>
+                    <td>{{ tag_name.id }}</td>
+                    <td>{{ tag_name.name }}</td>
+                    <td>{{ tag_name.description }}</td>
+                    <td>{{ tag_name.unit }}</td>
+                    <td>{{ tag_name.unit_long }}</td>
+                    <td>{{ tag_name.unit_description }}</td>
+                    <td>{{ tag_name.tag_type_id }}</td>
+                    <td>{{ tag_name.created_at }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No tag_name available.</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

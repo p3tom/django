@@ -1,0 +1,43 @@
+<!-- myapp/templates/measurement.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+</head>
+<body>
+    {% block content %}  
+        <h2>AQS MEASUREMENT</h2>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ts</th>
+                    <th>value</th>
+                    <th>Description</th>
+                    <th>tag_id</th>
+                    <th>sensor_id</th>
+                    <th>offset_applied</th>
+                    <th>scale_applied</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for measurement in measurements %}
+                    <tr>
+                        <td>{{ measurement.ts }}</td>
+                        <td>{{ measurement.value }}</td>
+                        <td>{{ measurement.measurement_pt_id }}</td>
+                        <td>{{ measurement.tag_id }}</td>
+                        <td>{{ measurement.sensor_id }}</td>
+                        <td>{{ measurement.offset_applied }}</td>
+                        <td>{{ measurement.scale_applied }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="8">No measurements available.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

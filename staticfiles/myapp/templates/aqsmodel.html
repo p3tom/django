@@ -1,0 +1,35 @@
+<!-- myapp/templates/aqsmodel.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+</head>
+<body>
+    {% block content %}  
+        <h2>AQS MODEL</h2>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Model</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aqsmodel in aqsmodels %}
+                    <tr>
+                        <td>{{ aqsmodel.id }}</td>
+                        <td>{{ aqsmodel.model }}</td>
+                        <td>{{ aqsmodel.description }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="5">No aqsmodels available.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

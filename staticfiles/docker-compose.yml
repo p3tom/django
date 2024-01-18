@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+ timescaledb:
+   container_name: aqs-db
+   hostname: aqs-db
+   image: timescale/timescaledb:2.12.0-pg15
+   restart: on-failure
+   ports:
+     - "127.0.0.1:5432:5432"
+   environment:
+     POSTGRES_USER: postgres
+     POSTGRES_PASSWORD: postgres  # Change this in a production environment
+   volumes:
+     - ../data:/home/postgres/pgdata/data
+     - ../scripts:/var/tmp/scripts

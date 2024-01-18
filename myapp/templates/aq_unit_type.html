@@ -1,0 +1,30 @@
+<!-- myapp/templates/aq_unit_type.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}
+        <h2>aq_unit_type</h2>
+        <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>TYPE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aq_unit_type in aq_unit_types %}
+                <tr>
+                    <td>{{ aq_unit_type.id }}</td>
+                    <td>{{ aq_unit_type.type }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No aq_unit_types available.</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

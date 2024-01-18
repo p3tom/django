@@ -1,0 +1,91 @@
+<!-- Add this section to your measurement.html template -->
+{% extends "mymenu.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+</head>
+<body>
+    {% block content %}  
+        <h2>Measurement</h2>
+        {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+        {% else %}
+            <table class="styled-table">
+            <!-- ... your existing table code ... -->
+            <thead>
+                <tr>
+                    <th>TS</th>
+                    <th>value</th>
+                    <th> measurement_pt_id</th>
+                    <th>tag_id</th>
+                    <th>sensor_id</th>
+                    <th>offset_applied</th>
+                    <th>scale_applied</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for measurement in measurements %}
+                    <tr>
+                        <td>{{ measurement.ts }}</td>
+                        <td>{{ measurement.value }}</td>
+                        <td>{{ measurement.measurement_pt_id }}</td>
+                        <td>{{ measurement.tag_id }}</td>
+                        <td>{{ measurement.sensor_id }}</td>
+                        <td>{{ measurement.offset_applied }}</td>
+                        <td>{{ measurement.scale_applied }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="8">No measurement available.</td></tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
+
+<!-- {% extends "mymenu.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+</head>
+<body>
+    {% block content %}  
+        <h2>Measurement</h2>
+            <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>TS</th>
+                    <th>value</th>
+                    <th> measurement_pt_id</th>
+                    <th>tag_id</th>
+                    <th>sensor_id</th>
+                    <th>offset_applied</th>
+                    <th>scale_applied</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for measurement in measurements %}
+                    <tr>
+                        <td>{{ measurement.ts }}</td>
+                        <td>{{ measurement.value }}</td>
+                        <td>{{ measurement.measurement_pt_id }}</td>
+                        <td>{{ measurement.tag_id }}</td>
+                        <td>{{ measurement.sensor_id }}</td>
+                        <td>{{ measurement.offset_applied }}</td>
+                        <td>{{ measurement.scale_applied }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="8">No measurement available.</td></tr>
+                {% endfor %}
+            </tbody>
+            </table>
+    {% endblock %}
+</body>
+</html> -->

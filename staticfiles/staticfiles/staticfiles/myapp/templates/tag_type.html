@@ -1,0 +1,30 @@
+<!-- myapp/templates/tag_type.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}  
+        <h2>tag_type</h2>
+        <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tag_type in tag_types %}
+                <tr>
+                    <td>{{ tag_type.id }}</td>
+                    <td>{{ tag_type.type }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No tag_types available.</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

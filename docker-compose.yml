@@ -1,43 +1,16 @@
-version: "3.1"
+version: "3"
 
 services:
-  django:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: django_image
-    networks:
-      - mynetwork
-    restart: on-failure
-    ports:
-      - "8000:8000"
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-    depends_on:
-      - timescaledb
-    volumes: 
-      - ${PWD}/project:/path/in/container
-    env_file:
-      - .env
-      
-  timescaledb:
-    container_name: aqs-db
-    hostname: aqs-db
-    image: timescale/timescaledb:2.12.0-pg15
-    networks:
-      - mynetwork
-    restart: on-failure
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    volumes:
-      - ${PWD}/data:/var/lib/postgresql/data
-      - ${PWD}/scripts:/var/tmp/scripts
-    env_file:
-      - .env
-
-  
-networks:
-  mynetwork:
-    driver: bridge
+ timescaledb:
+   container_name: aqs-db
+   hostname: aqs-db
+   image: timescale/timescaledb:2.12.0-pg15
+   restart: on-failure
+   ports:
+     - "127.0.0.1:5432:5432"
+   environment:
+     POSTGRES_USER: postgres
+     POSTGRES_PASSWORD: postgres  # Change this in a production environment
+   volumes:
+     - ../data:/home/postgres/pgdata/data
+     - ../scripts:/var/tmp/scripts

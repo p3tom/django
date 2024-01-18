@@ -1,0 +1,32 @@
+<!-- myapp/templates/version_info.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}  
+        <h2>version_info</h2>
+        <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>schema_version</th>
+                <th>schema_updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for version_info in version_infos %}
+                <tr>
+                    <td>{{ version_info.id }}</td>
+                    <td>{{ version_info.schema_version }}</td>
+                    <td>{{ version_info.schema_updated }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No version_infos available.</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!-- myapp/templates/sensor_list.html -->
+{% extends "mymenu.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body>
+    {% block content %}  
+        <h2>oem_manufacturer</h2>
+        <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th> NAME</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for oem_manufacturer in oem_manufacturers %}
+                <tr>
+                    <td>{{ oem_manufacturer.0 }}</td>
+                    <td>{{ oem_manufacturer.1 }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No oem_manufacturer available.</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>
