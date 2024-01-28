@@ -22,12 +22,74 @@ body {
    background-color:#375BDC;
    color:#ffffff;
    padding:10px;
+   overflow: hidden;
  }
  .topnav a:link, .topnav a:visited {
    text-decoration: none;
    color: #ffffff; 
  }
- .topnav a:hover, .topnav a:active {
-   text-decoration: underline;
- }
  
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #65d446;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #65d446;
+  color: white;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.topnav a:hover, .dropdown:hover .dropbtn {
+  background-color: #65d446;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: dodgerblue;
+  min-width: 160px;
+  box-shadow: #65d446;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #65d446;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}

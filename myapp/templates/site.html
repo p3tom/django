@@ -3,7 +3,9 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+<head>
     <link rel="stylesheet" href="{% static 'myfirst.css' %}">
+</head>
 <body>
     {% block content %}  
         <h2>Site List</h2>
@@ -12,14 +14,14 @@
             <tr>
                 <th>ID</th>
                 <th> NAME </th>
-                <th> addr_street</th>
-                <th>addr_postcode</th>
-                <th> addr_city</th>
-                <th>geo_xy</th>
-                <th> created_at</th>
-                <th> site_operator_id</th>
-                <th>site_owner_id</th>
-                <th> owner_parent_id</th>
+                <th> Street</th>
+                <th>Postcode</th>
+                <th> City</th>
+                <th>Geometric XY</th>
+                <th> Created At</th>
+                <th> Site operated ID</th>
+                <th>Site Owner ID</th>
+                <th> Owner Parent ID</th>
             </tr>
         </thead>
         <tbody>
@@ -30,14 +32,18 @@
                     <td>{{ site.addr_street }}</td>
                     <td>{{ site.addr_postcode }}</td>
                     <td>{{ site.addr_city }}</td>
-                    <td>{{ site.geo_xy }}</td>
+                    {% if site.geo_xy %}
+                        <td>{{ site.geo_xy.x }}, {{ site.geo_xy.y }}</td>
+                    {% else %}
+                        <td>No coordinates</td>
+                    {% endif %}
                     <td>{{ site.created_at }}</td>
                     <td>{{ site.site_operator_id }}</td>
                     <td>{{ site.site_owner_id }}</td>
                     <td>{{ site.owner_parent_id }}</td>
                 </tr>
             {% empty %}
-                <tr><td colspan="10">No site available.</td></tr>
+                <tr><td colspan="11">No site available.</td></tr>
             {% endfor %}
         </tbody>
         </table>

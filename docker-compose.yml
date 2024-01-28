@@ -1,16 +1,28 @@
-version: "3"
+version: "3.11.7"
 
 services:
- timescaledb:
-   container_name: aqs-db
-   hostname: aqs-db
-   image: timescale/timescaledb:2.12.0-pg15
-   restart: on-failure
-   ports:
-     - "127.0.0.1:5432:5432"
-   environment:
-     POSTGRES_USER: postgres
-     POSTGRES_PASSWORD: postgres  # Change this in a production environment
-   volumes:
-     - ../data:/home/postgres/pgdata/data
-     - ../scripts:/var/tmp/scripts
+  localhost:
+    container_name: aqs-db
+    hostname: aqs-db
+    image: timescale/timescaledb:2.12.0-pg15
+    restart: on-failure
+    ports:
+      - "0.0.0.0:5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - /absolute/path/to/data:/home/postgres/pgdata/data
+      - /absolute/path/to/scripts:/var/tmp/scripts
+
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ./wait-for-it.sh timescaledb:5432 --timeout=90 -- python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/aqs_db_snapshot-2023-10-23/aqsproject
+    ports:
+      - "8000:8000"
+    depends_on:
+      - localhost

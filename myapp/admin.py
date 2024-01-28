@@ -28,6 +28,7 @@ from .models import VersionInfo
 from .models import TagType
 from .models import LoggerInstance
 
+# Register your models here.
 admin.site.register(AqsModel)
 admin.site.register(AqsSystem)
 admin.site.register(Customer)
@@ -56,9 +57,3 @@ admin.site.register(VersionInfo)
 admin.site.register(LoggerInstance)
 
 
-
-
-
-# Register your models here.
-
-#admin.site.register(Sensor)

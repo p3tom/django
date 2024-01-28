@@ -2,16 +2,16 @@
 
 from django.contrib.gis.db import models
 from django.utils import timezone
-
+from django.contrib.gis.db import models as gis_models
+from django.db import models
+from django.apps import apps
 
 
 class AqsModel(models.Model):
-    id = models.AutoField(primary_key=True)
     model = models.CharField(max_length=20, unique=True)
     description = models.CharField(max_length=255, null=True, blank=True)
 
-    class Meta:     
-        
+    class Meta:
         db_table = 'aqs_model'
         verbose_name = 'Aqs Model'
         verbose_name_plural = 'Aqs Models'
@@ -21,17 +21,17 @@ class AqsModel(models.Model):
 
 class AqsSystem(models.Model):
     serialno = models.CharField(max_length=15, primary_key=True)
-    model_id = models.IntegerField()
+    model = models.ForeignKey(AqsModel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        
         db_table = 'aqs_system'
         verbose_name = 'Aqs System'
         verbose_name_plural = 'Aqs Systems'
 
     def __str__(self):
-        return self.serialno
+        return f"{self.serialno} - {self.model}"
+
 
 class Customer(models.Model):
     id = models.AutoField(primary_key=True)
@@ -39,7 +39,7 @@ class Customer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        
+        managed = False
         db_table = 'customer'
         verbose_name = 'Customer'
         verbose_name_plural = 'Customers'
@@ -52,7 +52,7 @@ class Event(models.Model):
     description = models.CharField(max_length=255)
 
     class Meta:
-        
+        managed = False
         db_table = 'event'
         verbose_name = 'Event'
         verbose_name_plural = 'Events'
@@ -64,14 +64,14 @@ class MeasurementPoint(models.Model):
    id = models.AutoField(primary_key=True)
    name = models.CharField(max_length=100)
    mp_type_id = models.IntegerField()
-   description = models.TextField(blank=True, null=True)
+   description = models.CharField(max_length=255, null=True, blank=True)
    aq_unit_id = models.IntegerField()
-  # geo_xy = models.PointField(blank=True, null=True)
+   geo_xy = gis_models.PointField(blank=True, null=True)
    created_at = models.DateTimeField(auto_now_add=True)
 
    class Meta:
-       
-       db_table = '"aqs"."measurement_pt"'
+       managed = False
+       db_table = 'measurement_pt'
        verbose_name = 'Measurement Point'
        verbose_name_plural = 'Measurement Points'
 
@@ -85,7 +85,7 @@ class MeasurementPointEvent(models.Model):
     measurement_pt_id = models.IntegerField()
 
     class Meta:
-        
+        managed = False
         db_table = 'measurement_pt_event'
         verbose_name = 'Measurement Point Event'
         verbose_name_plural = 'Measurement Point Events'
@@ -99,7 +99,7 @@ class MeasurementPointHistory(models.Model):
     measurement_pt_id = models.IntegerField()
 
     class Meta:
-        
+        managed = False
         db_table = 'measurement_pt_history'
         verbose_name = 'Measurement Point History'
         verbose_name_plural = 'Measurement Point Histories'
@@ -107,14 +107,13 @@ class MeasurementPointHistory(models.Model):
     def __str__(self):
         return f"Event Date: {self.event_date}, Measurement Point ID: {self.measurement_pt_id}"
     
-
 class MeasurementPointSensor(models.Model):
     id = models.BigAutoField(primary_key=True)
     measurement_pt_id = models.IntegerField()
     sensor_id = models.IntegerField()
 
     class Meta:
-        
+        managed = False
         db_table = 'measurement_pt_sensor'
         verbose_name = 'Measurement Point Sensor'
         verbose_name_plural = 'Measurement Point Sensors'
@@ -128,7 +127,7 @@ class MeasurementPointType(models.Model):
     description = models.CharField(max_length=100, null=False)
 
     class Meta:
-        
+        managed = False
         db_table = '"aqs"."measurement_pt_type"'
         verbose_name = 'Measurement Point Type'
         verbose_name_plural = 'Measurement Point Types'
@@ -146,7 +145,7 @@ class Measurement(models.Model):
     scale_applied = models.FloatField(default=1.0)
 
     class Meta:
-        
+        managed = False
         db_table = '"aqs"."measurement"'
         verbose_name = 'measurement'
         verbose_name_plural = 'measurements'
@@ -160,10 +159,38 @@ class OEMManufacturer(models.Model):
     name = models.CharField(max_length=100)
 
     class Meta:
-        
+        managed = False
         db_table = 'oem_manufacturer'
         verbose_name = 'OEM Manufacturer'
         verbose_name_plural = 'OEM Manufacturers'
+
+    def __str__(self):
+        return self.name
+    
+class Site(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=100)
+    addr_street = models.CharField(max_length=100, null=True, blank=True)
+    addr_postcode = models.CharField(max_length=10, null=True, blank=True)
+    addr_city = models.CharField(max_length=100, null=True, blank=True)
+    #geo_xy = gis_models.PointField(null=True, blank=True)
+    def get_geo_xy(self):
+        if self.geo_xy:
+            x, y = eval(self.geo_xy)
+            return Point(x, y)
+        else:
+            return None
+    created_at = models.DateTimeField(auto_now_add=True)
+    site_operator_id = models.IntegerField()
+    site_owner_id = models.IntegerField()
+    owner_parent_id = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        managed = False
+        db_table = '"aqs"."site"'
+        verbose_name = 'Site'
+        verbose_name_plural = 'Sites'
+        unique_together = ['id']
 
     def __str__(self):
         return self.name
@@ -172,11 +199,11 @@ class Plant(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     site_id = models.IntegerField()
-    
+    geo_xy = gis_models.PointField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        
+        managed = False
         db_table = 'plant'
         verbose_name = 'Plant'
         verbose_name_plural = 'Plants'
@@ -192,7 +219,7 @@ class Sensor(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        
+        managed = False
         db_table = 'sensor'
         verbose_name = 'Sensor' 
         verbose_name_plural = 'Sensors'
@@ -207,7 +234,7 @@ class SensorHistory(models.Model):
     sensor_id = models.IntegerField()
 
     class Meta:
-        
+        managed = False
         db_table = 'sensor_history'
         verbose_name = 'Sensor History'
         verbose_name_plural = 'Sensor Histories'
@@ -222,7 +249,7 @@ class SensorType(models.Model):
     oem_mfr_id = models.IntegerField()
 
     class Meta:
-        
+        managed = False
         db_table = 'sensor_type'
         verbose_name = 'Sensor Type'
         verbose_name_plural = 'Sensor Types'
@@ -238,7 +265,7 @@ class SensorVerification(models.Model):
     sensor_id = models.IntegerField()
 
     class Meta:
-        
+        managed = False
         db_table = 'sensor_verification'
         verbose_name = 'Sensor Verification'
         verbose_name_plural = 'Sensor Verifications'
@@ -246,26 +273,28 @@ class SensorVerification(models.Model):
     def __str__(self):
         return f"Sensor Verification - {self.ts}"
 
-class Site(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    addr_street = models.CharField(max_length=100, null=True, blank=True)
-    addr_postcode = models.CharField(max_length=10, null=True, blank=True)
-    addr_city = models.CharField(max_length=100, null=True, blank=True)
-    #geo_xy = models.PointField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    site_operator_id = models.IntegerField()
-    site_owner_id = models.IntegerField()
-    owner_parent_id = models.IntegerField(null=True, blank=True)
 
-    class Meta:
-        
-        db_table = 'site'
-        verbose_name = 'Site'
-        verbose_name_plural = 'Sites'
 
-    def __str__(self):
-        return self.name
+# class Site(models.Model):
+#     id = models.IntegerField(primary_key=True)
+#     name = models.CharField(max_length=100)
+#     addr_street = models.CharField(max_length=100, null=True, blank=True)
+#     addr_postcode = models.CharField(max_length=10, null=True, blank=True)
+#     addr_city = models.CharField(max_length=100, null=True, blank=True)
+#     geo_xy = gis_models.PointField(null=True, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     site_operator = models.ForeignKey('Operator', on_delete=models.CASCADE)
+#     site_owner = models.ForeignKey('Owner', on_delete=models.CASCADE)
+#     owner_parent = models.ForeignKey('Owner', null=True, blank=True, related_name='child_sites', on_delete=models.SET_NULL)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'site'
+#         verbose_name = 'Site'
+#         verbose_name_plural = 'Sites'
+
+#     def __str__(self):
+#         return self.name
 
 class SiteContact(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -276,11 +305,11 @@ class SiteContact(models.Model):
     work_phone = models.CharField(max_length=20, null=True, blank=True)
     comment = models.CharField(max_length=255, null=True, blank=True)
     active = models.BooleanField(default=True)
-    site_id = models.IntegerField()
+    site = models.ForeignKey(Site, on_delete=models.CASCADE, related_name='contacts')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        
+        managed = False
         db_table = 'site_contact'
         verbose_name = 'Site Contact'
         verbose_name_plural = 'Site Contacts'
@@ -299,7 +328,7 @@ class TagName(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        
+        managed = False
         db_table = 'tag_name'
         verbose_name = 'Tag Name'
         verbose_name_plural = 'Tag Names'
@@ -313,10 +342,10 @@ class AQUnit(models.Model):
     plant_id = models.IntegerField()
     aq_unit_type_id = models.IntegerField()
     description = models.CharField(max_length=255, null=True, blank=True)
-    #geo_xy = models.PointField(null=True, blank=True)
+    geo_xy = gis_models.PointField(null=True, blank=True)
 
     class Meta:
-        
+        managed = False
         db_table = '"aqs"."aq_unit"'
         verbose_name = 'aqs.aq_unit'
         verbose_name_plural = 'aqs.aq_units'
@@ -329,7 +358,7 @@ class AQUnitType(models.Model):
     type = models.CharField(max_length=255)
 
     class Meta:
-        
+        managed = False
         db_table = 'aq_unit_type'
         verbose_name = 'aqs.aq_unit_type'
         verbose_name_plural = 'aqs.aq_unit_types'
@@ -344,7 +373,7 @@ class MqttTopic(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        
+        managed = False
         db_table = 'mqtt_topic'
         verbose_name = 'MQTT Topic'
         verbose_name_plural = 'MQTT Topics'
@@ -361,7 +390,7 @@ class LoggerConfig(models.Model):
      logger_id = models.IntegerField()
      
      class Meta:
-         
+         managed = False
          db_table = '"aqs"."logger_config"'
          unique_together = ['mqtt_topic_id', 'sensor_id', 'tag_name_id'] 
          verbose_name = 'Logger Configuration'
@@ -373,7 +402,7 @@ class VersionInfo(models.Model):
     schema_updated = models.DateTimeField(default=timezone.now, null=False)
 
     class Meta:
-        
+        managed = False
         db_table = 'version_info'
         verbose_name = 'Version Information'
         verbose_name_plural = 'Version Information'
@@ -386,7 +415,7 @@ class TagType(models.Model):
     type = models.CharField(max_length=255, null=False)
 
     class Meta:
-        
+        managed = False
         db_table = 'tag_type'
         verbose_name = 'Tag Type'
         verbose_name_plural = 'Tag Types'
@@ -398,7 +427,20 @@ class LoggerInstance(models.Model):
     name = models.TextField(null=False)
 
     class Meta:
-        
+        managed = False
+        db_table = 'logger_instance'
+        verbose_name = 'Logger Instance'
+        verbose_name_plural = 'Logger Instances'
+
+    def __str__(self):
+        return self.name
+    
+class VersionInfo(models.Model):
+    id = models.IntegerField()
+    
+
+    class Meta:
+        managed = False
         db_table = 'logger_instance'
         verbose_name = 'Logger Instance'
         verbose_name_plural = 'Logger Instances'

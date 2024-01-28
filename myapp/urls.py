@@ -3,6 +3,9 @@ from . import views
 
 
 urlpatterns = [
+
+        # Add other paths as needed
+    
     path('home/', views.home, name='home'),
     path('aqsmodel/', views.aqsmodel, name='aqsmodel'),
     path('aqssystem/', views.aqssystem, name='aqssystem'),
@@ -31,5 +34,5 @@ urlpatterns = [
     path('tag_type/', views.tag_type, name='tag_type'),  
     path('logger_instance/', views.logger_instance, name='logger_instance'),     
 
-    # Add other paths as needed
+
 ]

@@ -6,15 +6,15 @@
     <link rel="stylesheet" href="{% static 'myfirst.css' %}">
 <body>
     {% block content %}  
-        <h2>plant</h2>
+        <h2>Plant</h2>
         <table class="styled-table">
         <thead>
             <tr>
                 <th>ID</th>
                 <th> NAME</th>
-                <th> site_id</th>
-                
-                <th> created_at</th>
+                <th> Site ID</th>
+                <th>GEO_XY</th>
+                <th> Created AT</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                     <td>{{ plant.id }}</td>
                     <td>{{ plant.name }}</td>
                     <td>{{ plant.site_id }}</td>
-                  
+                    <td>{{ plant.geo_xy }}</td>
                     <td>{{ plant.created_at }}</td>
                 </tr>
             {% empty %}

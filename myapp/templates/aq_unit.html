@@ -15,11 +15,10 @@
                 <tr>
                     <th>ID</th>
                     <th>name</th>
-                    <th>plant_id</th>
-                    <th>aq_unit_type_id</th>
+                    <th>Plant ID</th>
+                    <th>AQ Unit Type ID</th>
                     <th>Description</th>
-                    <th>geo_x</th>
-                    <th>geo_y</th>
+                    <th>Geo XY</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,11 +29,10 @@
                         <td>{{ aq_unit.plant_id }}</td>
                         <td>{{ aq_unit.aq_unit_type_id }}</td>
                         <td>{{ aq_unit.description }}</td>
-                        <td>{{ aq_unit.geo_xy.x }}</td>
-                        <td>{{ aq_unit.geo_xy.y }}</td>
+                        <td>{{ aq_unit.geo_xy }}</td>
                     </tr>
                 {% empty %}
-                    <tr><td colspan="7">No aq_units available.</td></tr>
+                    <tr><td colspan="6">No aq_units available.</td></tr>
                 {% endfor %}
             </tbody>
         </table>

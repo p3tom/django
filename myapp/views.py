@@ -65,8 +65,6 @@ def measurement_pt_sensor(request):
     measurement_pt_sensors = MeasurementPointSensor.objects.all()
     return render(request, 'measurement_pt_sensor.html', {'measurement_pt_sensors': measurement_pt_sensors})
 
-from .models import MeasurementPointType
-
 def measurement_pt_type(request):
     measurement_pt_types = MeasurementPointType.objects.all()
     return render(request, 'measurement_pt_type.html', {'measurement_pt_types': measurement_pt_types})
@@ -101,7 +99,7 @@ def sensor_verification(request):
 
 def site(request):
     sites = Site.objects.all()
-    return render(request, 'site.html', {'sites': sites})  
+    return render(request, 'site.html', {'sites': sites})
 
 def site_contact(request):
     site_contacts = SiteContact.objects.all()
@@ -123,12 +121,6 @@ def mqtt_topic(request):
     mqtt_topics = MqttTopic.objects.all()
     return render(request, 'mqtt_topic.html', {'mqtt_topics': mqtt_topics})
 
-#from .models import LoggerConfig
-
-# def logger_config(request):
-#     logger_configs = LoggerConfig.objects.all()
-#     return render(request, 'logger_configs.html', {'logger_configs': logger_configs})
-from .models import LoggerConfig 
 def logger_config(request): 
     logger_configs = LoggerConfig.objects.all() 
     return render(request, 'logger_config.html', {'logger_configs': logger_configs})

@@ -13,9 +13,6 @@ import os
 
 from pathlib import Path
 
-GDAL_LIBRARY_PATH = r'C:\Users\PreethiKamaraj\project\db\Lib\site-packages\osgeo\gdal304.dll'
-GEOS_LIBRARY_PATH = r'C:\Users\PreethiKamaraj\project\db\Lib\site-packages\osgeo\geos_c.dll'
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5@tq(hvk9ch^2w*^7erclsq0@z5r%&jmq+-sr((=3*24@1e54n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1"]
 
@@ -79,14 +76,14 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-import dj_database_url
+#import dj_database_url
 
 # Use the database URL for configuration if available
 #db_from_env = dj_database_url.config()
 # DATABASES = {'default': db_from_env} if db_from_env else {
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'aqs',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
@@ -95,6 +92,9 @@ DATABASES = {
     }
 }
 
+# Other GIS-related settings
+GDAL_LIBRARY_PATH = r'C:\Users\PreethiKamaraj\project\db\Lib\site-packages\osgeo\gdal304.dll'
+GEOS_LIBRARY_PATH = r'C:\Users\PreethiKamaraj\project\db\Lib\site-packages\osgeo\geos_c.dll'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

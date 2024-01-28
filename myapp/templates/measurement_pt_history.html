@@ -6,21 +6,21 @@
     <link rel="stylesheet" href="{% static 'myfirst.css' %}">
 <body>
     {% block content %}  
-        <h2>Measurement Point</h2>
+        <h2>Measurement Point History</h2>
         <table class="styled-table">
         <thead>
             <tr>
-                <th>event_date</th>
-                <th> old_sensor_id</th>
-                <th>measurement_pt_id</th>
+                <th>Event Date</th>
+                <th> Old Sensor ID</th>
+                <th>Measurement Point ID</th>
             </tr>
         </thead>
         <tbody>
             {% for measurement_pt_history in measurement_pt_historys %}
                 <tr>
-                    <td>{{ measurement_pt_history.0 }}</td>
-                    <td>{{ measurement_pt_history.1 }}</td>
-                    <td>{{ measurement_pt_history.2 }}</td>
+                    <td>{{ measurement_pt_history.event_date }}</td>
+                    <td>{{ measurement_pt_history.old_sensor_id }}</td>
+                    <td>{{ measurement_pt_history.measurement_pt_id }}</td>
                 </tr>
             {% empty %}
                 <tr><td colspan="5">No measurement_pt_history available.</td></tr>
