@@ -397,7 +397,7 @@ class LoggerConfig(models.Model):
          verbose_name_plural = 'Logger Configurations' 
     
 class VersionInfo(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     schema_version = models.TextField(default='0.7', null=False)
     schema_updated = models.DateTimeField(default=timezone.now, null=False)
 
@@ -435,15 +435,3 @@ class LoggerInstance(models.Model):
     def __str__(self):
         return self.name
     
-class VersionInfo(models.Model):
-    id = models.IntegerField()
-    
-
-    class Meta:
-        managed = False
-        db_table = 'logger_instance'
-        verbose_name = 'Logger Instance'
-        verbose_name_plural = 'Logger Instances'
-
-    def __str__(self):
-        return self.name
